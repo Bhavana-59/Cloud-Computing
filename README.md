@@ -1,3 +1,5 @@
+
+
 # Experiment 1 — Performance Analysis of Type-1 and Type-2 Hypervisors
 
 ## Objective
@@ -6,11 +8,11 @@ To create identically configured Ubuntu virtual machines on a **Type-1 hyperviso
 
 The performance comparison is based on:
 
-* Total execution time
-* Total events
-* Events per second
-* Average latency
-* CPU and memory resource utilization
+- Total execution time
+- Total events
+- Events per second
+- Average latency
+- CPU and memory resource utilization
 
 ---
 
@@ -36,7 +38,7 @@ Physical Hardware
     Ubuntu VM
        ↓
     Sysbench
-```
+````
 
 ### Type-2 Hypervisor
 
@@ -58,13 +60,13 @@ VMware Workstation
     Sysbench
 ```
 
-The same guest operating system, virtual CPU, memory, storage, and Sysbench workload are used as far as specified by the experiment manual so that the performance results can be compared.
+The same guest operating system, virtual CPU, memory, storage, and Sysbench workload are used as specified by the experiment manual so that the performance results can be compared.
 
 ---
 
 ## 2. Standard VM Configuration
 
-Both virtual machines should use the following configuration:
+Both virtual machines use the following configuration:
 
 | Resource      | Configuration                            |
 | ------------- | ---------------------------------------- |
@@ -135,21 +137,21 @@ sysbench cpu --cpu-max-prime=20000 run
 
 The following values are recorded:
 
-* Total time
+* Total execution time
 * Total number of events
 * Events per second
 * Average latency
 
 ## 3.5 Type-1 Results
 
-> **Status:** Pending — Proxmox system will be accessed when the college/lab environment is available.
+> **Status:** Completed — Sysbench benchmark result collected from the Proxmox VM.
 
 | Metric               | Type-1 — Proxmox |
 | -------------------- | ---------------: |
-| Total execution time |         10.004s  |
-| Total events         |           17257  |
-| Events per second    |          1725.49 |
-| Average latency      |             0.58 |
+| Total execution time |        10.0004 s |
+| Total events         |           17,257 |
+| Events per second    |         1,725.49 |
+| Average latency      |          0.58 ms |
 
 ## 3.6 Resource Monitoring
 
@@ -226,98 +228,63 @@ Record:
 
 ## 4.5 Type-2 Results
 
-The actual values will be filled after running the benchmark.
+> **Status:** Completed — Sysbench benchmark result collected from the VMware VM.
 
 | Metric               | Type-2 — VMware |
 | -------------------- | --------------: |
-| Total execution time |        10.0010s |
-| Total events         |           10274 |
-| Events per second    |         1027.00 |
-| Average latency      |            0.97 |
+| Total execution time |       10.0010 s |
+| Total events         |          10,274 |
+| Events per second    |        1,027.00 |
+| Average latency      |         0.97 ms |
 
 ---
 
 # 5. Performance Comparison
 
-After both experiments are completed, the measured values will be compared.
+The measured Sysbench results are compared below.
 
 | Metric               | Type-1 — Proxmox | Type-2 — VMware |
 | -------------------- | ---------------: | --------------: |
-| Total execution time |          10.004s |        10.0010s |
-| Total events         |            17257 |            1024 |
-| Events per second    |          1725.49 |         1027.00 |
-| Average latency      |              0.58|            0.97 |
-
-The comparison will be based only on the actual measurements obtained from the two environments.
+| Total execution time |        10.0004 s |       10.0010 s |
+| Total events         |           17,257 |          10,274 |
+| Events per second    |         1,725.49 |        1,027.00 |
+| Average latency      |          0.58 ms |         0.97 ms |
 
 ---
 
 # 6. Performance Analysis
 
-The experiment evaluates how the two hypervisor types perform under the same CPU benchmark workload.
+The Sysbench CPU benchmark was executed on both virtual machines using the same workload:
 
-The following aspects will be analyzed:
+```bash
+sysbench cpu --cpu-max-prime=20000 run
+```
+
+The recorded results show differences in the benchmark metrics between the Type-1 Proxmox environment and the Type-2 VMware environment.
 
 ### Execution Time
 
-The total time required to complete the Sysbench CPU workload.
+The Proxmox VM recorded a total execution time of **10.0004 seconds**, while the VMware VM recorded **10.0010 seconds**.
 
 ### Events per Second
 
-The number of benchmark events completed per second.
+The Proxmox VM recorded **1,725.49 events/sec**, while the VMware VM recorded **1,027.00 events/sec**.
 
 ### Latency
 
-The time taken to process individual benchmark events.
+The average latency recorded was **0.58 ms** for Proxmox and **0.97 ms** for VMware.
 
 ### Resource Utilization
 
-CPU and memory utilization are observed during the experiment to understand resource usage.
+CPU and memory resource utilization are observed during the experiment to understand resource usage.
 
-The final analysis will be added after collecting both Type-1 and Type-2 results.
+For Proxmox, resource utilization can be observed through the VM **Summary** page. VMware resource usage can be observed through the virtual machine and host environment during benchmark execution.
 
----
-
-# 7. Screenshots
-
-Screenshots are organized according to the experiment manual.
-
-```text
-screenshots/
-├── type1-proxmox/
-│   ├── 01-proxmox-dashboard.png
-│   ├── 02-proxmox-vm-configuration.png
-│   ├── 03-proxmox-vm-running.png
-│   ├── 04-proxmox-ubuntu-console.png
-│   ├── 05-proxmox-system-configuration.png
-│   └── 06-proxmox-sysbench-result.png
-│  
-│
-├── type2-vmware/
-│   ├── 01-vmware-vm-configuration.png
-│   ├── 02-vmware-vm-running.png
-│   ├── 03-vmware-system-configuration.png
-│   └── 04-vmware-sysbench-result.png
-│
-└── comparison/
-    └── 01-hypervisor-performance-comparison.png
-```
+The benchmark results provide the measured performance values for the two hypervisor environments under the configured experimental conditions.
 
 ---
 
-# 8. Results
-
-Detailed performance observations and analysis will be maintained in:
-
-```text
-results/performance-analysis.md
-```
-
-The final comparison will be completed after both Type-1 and Type-2 benchmark results are available.
-
----
-
-# 9. Repository Structure
+# 7. Repository Structure
 
 ```text
 CC-LAB/
@@ -326,16 +293,25 @@ CC-LAB/
     │
     ├── screenshots/
     │   ├── type1-proxmox/
+    │   │   ├── 01-proxmox-dashboard.png
+    │   │   ├── 02-proxmox-vm-configuration.png
+    │   │   ├── 03-proxmox-vm-running.png
+    │   │   ├── 04-proxmox-ubuntu-console.png
+    │   │   ├── 05-proxmox-system-configuration.png
+    │   │   └── 06-proxmox-sysbench-result.png
+    │   │
     │   ├── type2-vmware/
+    │   │   ├── 01-vmware-vm-configuration.png
+    │   │   └── 04-vmware-sysbench-result.png
+    │   │
     │   └── comparison/
     │
     └── results/
-        └── performance-analysis.md
 ```
 
 ---
 
-# 10. Tools Used
+# 8. Tools Used
 
 * Proxmox VE
 * VMware Workstation
@@ -346,7 +322,7 @@ CC-LAB/
 
 ---
 
-# 11. Benchmark Command
+# 9. Benchmark Command
 
 The CPU benchmark used for both hypervisors is:
 
@@ -364,4 +340,8 @@ This experiment studies the performance of virtual machines running on Type-1 an
 
 The Type-1 environment uses **Proxmox VE**, while the Type-2 environment uses **VMware Workstation**. Both environments use an Ubuntu guest operating system with the specified virtual resources and the same Sysbench CPU workload.
 
-The final performance comparison and conclusions will be added after collecting measurements from both environments.
+The measured Sysbench results provide a basis for comparing CPU execution time, event throughput, and latency under the configured experimental conditions.
+
+
+
+
