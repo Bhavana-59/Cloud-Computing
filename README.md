@@ -146,10 +146,10 @@ The following values are recorded:
 
 | Metric               | Type-1 — Proxmox |
 | -------------------- | ---------------: |
-| Total execution time |                — |
-| Total events         |                — |
-| Events per second    |                — |
-| Average latency      |                — |
+| Total execution time |         10.004s  |
+| Total events         |           17257  |
+| Events per second    |          1725.49 |
+| Average latency      |             0.58 |
 
 ## 3.6 Resource Monitoring
 
@@ -230,10 +230,10 @@ The actual values will be filled after running the benchmark.
 
 | Metric               | Type-2 — VMware |
 | -------------------- | --------------: |
-| Total execution time |               — |
-| Total events         |               — |
-| Events per second    |               — |
-| Average latency      |               — |
+| Total execution time |        10.0010s |
+| Total events         |           10274 |
+| Events per second    |         1027.00 |
+| Average latency      |            0.97 |
 
 ---
 
@@ -243,10 +243,10 @@ After both experiments are completed, the measured values will be compared.
 
 | Metric               | Type-1 — Proxmox | Type-2 — VMware |
 | -------------------- | ---------------: | --------------: |
-| Total execution time |                — |               — |
-| Total events         |                — |               — |
-| Events per second    |                — |               — |
-| Average latency      |                — |               — |
+| Total execution time |          10.004s |        10.0010s |
+| Total events         |            17257 |            1024 |
+| Events per second    |          1725.49 |         1027.00 |
+| Average latency      |              0.58|            0.97 |
 
 The comparison will be based only on the actual measurements obtained from the two environments.
 
@@ -290,8 +290,8 @@ screenshots/
 │   ├── 03-proxmox-vm-running.png
 │   ├── 04-proxmox-ubuntu-console.png
 │   ├── 05-proxmox-system-configuration.png
-│   ├── 06-proxmox-sysbench-result.png
-│   └── 07-proxmox-resource-monitoring.png
+│   └── 06-proxmox-sysbench-result.png
+│  
 │
 ├── type2-vmware/
 │   ├── 01-vmware-vm-configuration.png
