@@ -20,7 +20,7 @@ To compare the performance of a Virtual Machine (VM) and a Docker container by e
 
 ---
 
-## 3. Introduction
+# 3. Experiment Overview
 
 Virtual Machines and containers are two commonly used approaches for virtualization in cloud computing.
 
@@ -30,9 +30,7 @@ A **Docker container** provides application-level isolation while sharing the ho
 
 In this experiment, both environments are evaluated using system-level and application-level performance measurements.
 
----
-
-## 4. VM vs Container
+### VM vs Container
 
 | Feature | Virtual Machine | Docker Container |
 |---|---|---|
@@ -46,32 +44,32 @@ In this experiment, both environments are evaluated using system-level and appli
 
 ---
 
-## 5. Experimental Environment
+# 4. Experimental Environment
 
-### 5.1 Virtual Machine
+## 4.1 Virtual Machine Configuration
 
 | Parameter | Configuration |
 |---|---|
 | Platform | VMware Virtual Platform |
 | Operating System | Ubuntu 24.04.5 LTS |
+| Kernel | 7.0.0-31-generic |
 | CPU | 2 virtual CPUs |
 | Memory | Approximately 1.9 GiB |
 | Virtual Disk | 20 GB |
 | Swap | Approximately 3.4 GiB |
 
-### 5.2 Docker Container
+## 4.2 Docker Container Configuration
 
 | Parameter | Configuration |
 |---|---|
-| Container Runtime | Docker |
-| Docker Version | 29.1.3 |
+| Container Runtime | Docker 29.1.3 |
 | Base Image | Ubuntu 24.04 |
 | CPU Limit | 1 CPU |
 | Memory Limit | 512 MB |
 | Memory cgroup limit | 536870912 bytes |
 | CPU cgroup configuration | 100000 / 100000 |
 
-### 5.3 Tools Used
+## 4.3 Tools Used
 
 | Tool | Purpose |
 |---|---|
@@ -84,7 +82,9 @@ In this experiment, both environments are evaluated using system-level and appli
 
 ---
 
-## 6. Experiment Architecture
+# 5. Experiment Architecture
+
+## 5.1 VM vs Container Architecture
 
 ```text
                     VM vs Container
@@ -110,7 +110,7 @@ In this experiment, both environments are evaluated using system-level and appli
                  Performance Results
 ````
 
-### FastAPI Application Architecture
+## 5.2 FastAPI Application Architecture
 
 ```text
               Client
@@ -130,7 +130,7 @@ In this experiment, both environments are evaluated using system-level and appli
 
 ---
 
-## 7. Experiment Workflow
+# 6. Experiment Workflow
 
 ```text
 System Setup
@@ -171,13 +171,13 @@ Conclusion
 
 ---
 
-## 8. Experimental Procedure
+# 7. Experimental Procedure
 
-### Step 1 — Verify VM Environment
+## Step 1 — Verify VM Environment
 
 The VM environment was first verified using Linux system-information commands.
 
-The following parameters were checked:
+The following were checked:
 
 * CPU configuration
 * Memory
@@ -190,7 +190,7 @@ The corresponding evidence is available in the `screenshots/` directory.
 
 ---
 
-### Step 2 — Verify Docker Environment
+## Step 2 — Verify Docker Environment
 
 Docker installation and configuration were verified before performing the container experiments.
 
@@ -204,7 +204,7 @@ The following were checked:
 
 ---
 
-### Step 3 — Create and Verify Container
+## Step 3 — Create and Verify Container
 
 A Docker container was created using the configured Ubuntu-based environment.
 
@@ -217,23 +217,23 @@ The container was verified to ensure that:
 
 ---
 
-### Step 4 — CPU Performance Test
+## Step 4 — CPU Performance Test
 
 CPU performance was evaluated using **Sysbench**.
 
-The benchmark was performed for the VM and container environments, and the resulting measurements were collected for comparison.
+The benchmark was performed for the VM and container environments and the resulting measurements were collected for comparison.
 
 ---
 
-### Step 5 — Memory Performance Test
+## Step 5 — Memory Performance Test
 
 Memory performance was evaluated using the configured container environment.
 
-The container was restricted to approximately **512 MB memory** to demonstrate controlled resource allocation using Docker and cgroups.
+The container was restricted to **512 MB memory** to demonstrate controlled resource allocation using Docker and cgroups.
 
 ---
 
-### Step 6 — Disk I/O Performance Test
+## Step 6 — Disk I/O Performance Test
 
 Disk performance was evaluated using **fio**.
 
@@ -248,15 +248,22 @@ The VM and container disk results were collected for comparison.
 
 ---
 
-### Step 7 — Network Performance Test
+## Step 7 — Network Performance Test
 
 Network performance was evaluated using **iperf3**.
 
 The VM and container network environments were tested separately and their measured throughput values were recorded.
 
+The measured network throughput was approximately:
+
+| Environment      | Network Throughput |
+| ---------------- | -----------------: |
+| Virtual Machine  |   **64–66 Gbit/s** |
+| Docker Container |    **64.8 Gbit/s** |
+
 ---
 
-### Step 8 — FastAPI Application Test
+## Step 8 — FastAPI Application Test
 
 A FastAPI application was used for application-level testing inside the container.
 
@@ -274,7 +281,7 @@ The following were verified:
 
 ---
 
-## 9. Benchmark Categories
+# 8. Benchmark Categories
 
 The experiment evaluates the following performance parameters:
 
@@ -288,64 +295,90 @@ The experiment evaluates the following performance parameters:
 
 ---
 
-## 10. Results
+# 9. Performance Results
 
-The experiment collects performance measurements for the following parameters:
+The experiment evaluates the following performance areas:
 
-| Parameter             | VM       | Container |
-| --------------------- | -------- | --------- |
-| CPU                   | Measured | Measured  |
-| Memory                | Measured | Measured  |
-| Sequential Disk Read  | Measured | Measured  |
-| Sequential Disk Write | Measured | Measured  |
-| Random Disk Read      | Measured | Measured  |
-| Random Disk Write     | Measured | Measured  |
-| Network               | Measured | Measured  |
-| Application Execution | Verified | Verified  |
+## 9.1 CPU Performance
 
-> **Note:** Exact numerical benchmark values are maintained in `results/processed/benchmark_results.csv`.
+CPU performance was measured using **Sysbench** for both the VM and Docker container environments.
 
----
-
-## 11. Performance Graphs
-
-Generated performance graphs are stored in the `results/figures/` directory.
-
-### CPU Comparison
+The corresponding benchmark evidence is available in:
 
 ```text
-results/figures/01-cpu-comparison.png
+screenshots/11-vm-cpu-result.png
+screenshots/12-container-cpu-result.png
 ```
 
-### Network Comparison
-
-```text
-results/figures/02-network-comparison.png
-```
-
-### Container Memory Performance
-
-```text
-results/figures/03-container-memory-performance.png
-```
-
-### Processed Benchmark Data
+The processed benchmark data is available in:
 
 ```text
 results/processed/benchmark_results.csv
 ```
 
-### Graph Generation Script
+---
+
+## 9.2 Memory Performance
+
+Memory performance was evaluated using the configured container environment.
+
+The container was restricted to:
 
 ```text
-results/processed/generate_graphs.py
+512 MB
+```
+
+The corresponding result is available in:
+
+```text
+screenshots/13-container-memory-result.png
 ```
 
 ---
 
-## 12. FastAPI Application Testing
+## 9.3 Disk I/O Performance
 
-The FastAPI application was tested inside the Docker container.
+Disk performance was evaluated using **fio**.
+
+The following operations were tested:
+
+* Sequential Read
+* Sequential Write
+* Random Read
+* Random Write
+
+The corresponding results are available in:
+
+```text
+screenshots/14-vm-disk-results.png
+screenshots/15-container-disk-results.png
+```
+
+---
+
+## 9.4 Network Performance
+
+Network performance was measured using **iperf3**.
+
+| Environment      | Measured Throughput |
+| ---------------- | ------------------: |
+| Virtual Machine  |    **64–66 Gbit/s** |
+| Docker Container |     **64.8 Gbit/s** |
+
+The corresponding evidence is available in:
+
+```text
+screenshots/16-vm-network-iperf3.png
+screenshots/17-container-network-iperf3.png
+```
+
+---
+
+## 9.5 Application-Level Performance
+
+A FastAPI application was deployed inside the Docker environment.
+
+The following application operations were tested:
 
 | Test             | Purpose                                |
 | ---------------- | -------------------------------------- |
@@ -354,11 +387,75 @@ The FastAPI application was tested inside the Docker container.
 | Container Status | Verify application container execution |
 | API Endpoints    | Verify application accessibility       |
 
-The corresponding screenshots are available in the `screenshots/` directory.
+The corresponding evidence is available in:
+
+```text
+screenshots/18-fastapi-health.png
+screenshots/19-fastapi-compute.png
+screenshots/20-fastapi-container-running.png
+screenshots/21-container-fastapi-endpoints.png
+```
 
 ---
 
-## 13. Observations
+# 10. Performance Graphs
+
+The experiment includes generated performance graphs for the measured parameters.
+
+## 10.1 CPU Comparison
+
+![CPU Performance Comparison](results/figures/01-cpu-comparison.png)
+
+---
+
+## 10.2 Network Comparison
+
+![Network Performance Comparison](results/figures/02-network-comparison.png)
+
+---
+
+## 10.3 Container Memory Performance
+
+![Container Memory Performance](results/figures/03-container-memory-performance.png)
+
+---
+
+## 10.4 Processed Benchmark Data
+
+The processed benchmark data is available at:
+
+```text
+results/processed/benchmark_results.csv
+```
+
+## 10.5 Graph Generation Script
+
+The Python script used for graph generation is available at:
+
+```text
+results/processed/generate_graphs.py
+```
+
+---
+
+# 11. VM and Container Performance Comparison
+
+| Aspect                 | Virtual Machine         | Docker Container                    |
+| ---------------------- | ----------------------- | ----------------------------------- |
+| Isolation              | Complete guest OS       | Application/process isolation       |
+| Kernel                 | Own guest kernel        | Shares host kernel                  |
+| Resource overhead      | Higher                  | Lower                               |
+| Startup                | Relatively slower       | Relatively faster                   |
+| Resource control       | VM allocation           | Docker limits / cgroups             |
+| Application deployment | Complete OS environment | Lightweight application environment |
+| CPU Testing            | Sysbench                | Sysbench                            |
+| Disk Testing           | fio                     | fio                                 |
+| Network Testing        | iperf3                  | iperf3                              |
+| Application Testing    | FastAPI                 | Containerized FastAPI               |
+
+---
+
+# 12. Observations
 
 The following observations were made during the experiment:
 
@@ -376,38 +473,23 @@ The following observations were made during the experiment:
 
 7. Network throughput can be measured using iperf3.
 
-8. Containerized applications can be deployed and accessed through application endpoints.
+8. The measured network performance of the VM was approximately **64–66 Gbit/s**, while the container achieved approximately **64.8 Gbit/s**.
 
-9. The collected benchmark results provide a practical basis for comparing VM and container execution.
+9. Containerized applications can be deployed and accessed through application endpoints.
 
----
-
-## 14. VM and Container Comparison
-
-| Aspect                 | Virtual Machine         | Docker Container                    |
-| ---------------------- | ----------------------- | ----------------------------------- |
-| Isolation              | Complete guest OS       | Application/process isolation       |
-| Kernel                 | Own guest kernel        | Shares host kernel                  |
-| Resource overhead      | Higher                  | Lower                               |
-| Startup                | Relatively slower       | Relatively faster                   |
-| Resource control       | VM allocation           | Docker limits / cgroups             |
-| Application deployment | Complete OS environment | Lightweight application environment |
-| CPU Testing            | Sysbench                | Sysbench                            |
-| Disk Testing           | fio                     | fio                                 |
-| Network Testing        | iperf3                  | iperf3                              |
-| Application Testing    | FastAPI                 | Containerized FastAPI               |
+10. The collected benchmark results provide a practical basis for comparing VM and container execution.
 
 ---
 
-## 15. Experimental Evidence
+# 13. Experimental Evidence
 
-All screenshots are stored under:
+All experimental screenshots are stored under:
 
 ```text
 screenshots/
 ```
 
-### System and Configuration
+## 13.1 System and Configuration
 
 ```text
 01-docker-hello-world.png
@@ -418,7 +500,7 @@ screenshots/
 06-docker-configuration.png
 ```
 
-### Benchmark Setup
+## 13.2 Benchmark Setup
 
 ```text
 07-baseline-cpu-sysbench.png
@@ -427,7 +509,7 @@ screenshots/
 10-container-tools-verification - Copy.png
 ```
 
-### CPU and Memory
+## 13.3 CPU and Memory
 
 ```text
 11-vm-cpu-result.png
@@ -435,21 +517,21 @@ screenshots/
 13-container-memory-result.png
 ```
 
-### Disk
+## 13.4 Disk
 
 ```text
 14-vm-disk-results.png
 15-container-disk-results.png
 ```
 
-### Network
+## 13.5 Network
 
 ```text
 16-vm-network-iperf3.png
 17-container-network-iperf3.png
 ```
 
-### FastAPI Application
+## 13.6 FastAPI Application
 
 ```text
 18-fastapi-health.png
@@ -460,7 +542,7 @@ screenshots/
 
 ---
 
-## 16. Repository Structure
+# 14. Repository Structure
 
 ```text
 Experiment 2 — VM vs Container Performance Analysis/
@@ -517,39 +599,40 @@ Experiment 2 — VM vs Container Performance Analysis/
 
 ---
 
-## 17. Conclusion
+# 15. Conclusion
 
-This experiment provides a practical comparison between Virtual Machines and Docker containers using system-level and application-level performance measurements.
+This experiment successfully compares Virtual Machine and Docker container environments using system-level and application-level performance measurements.
 
-CPU performance was evaluated using Sysbench, disk I/O using fio, and network performance using iperf3. Docker resource limits were also used to demonstrate controlled resource allocation for containers.
+CPU performance was evaluated using **Sysbench**, disk I/O using **fio**, and network performance using **iperf3**. Docker resource limits were also used to demonstrate controlled container resource allocation.
 
-A FastAPI application was additionally deployed inside a Docker container and tested through its application endpoints.
+The network performance measurements showed approximately **64–66 Gbit/s** for the Virtual Machine and approximately **64.8 Gbit/s** for the Docker container.
 
-The experiment demonstrates the differences between VM-based and container-based virtualization and provides practical experience with performance benchmarking, container resource management, and application deployment.
+In addition, a FastAPI application was deployed inside a Docker container and tested through its application endpoints.
+
+Overall, the experiment provides practical understanding of how VMs and containers differ in terms of virtualization approach, resource management, performance measurement, and application deployment.
 
 ---
 
-## 18. Key Learning Outcomes
+# 16. Key Learning Outcomes
 
 After completing this experiment, we understand:
 
 * The difference between Virtual Machines and containers.
-* How to configure and verify a VM environment.
-* How to create and manage Docker containers.
-* How to perform CPU benchmarking using Sysbench.
-* How to apply memory limits to containers.
-* How to measure disk I/O using fio.
-* How to measure network throughput using iperf3.
-* How to deploy and test a FastAPI application inside a container.
-* How to collect and process benchmark results.
-* How to generate performance graphs.
-* How to compare VM and container performance experimentally.
+* How a VM is configured and verified.
+* How Docker containers are created and managed.
+* How CPU performance can be benchmarked using Sysbench.
+* How memory limits can be applied to containers.
+* How disk I/O can be measured using fio.
+* How network throughput can be measured using iperf3.
+* How application services can be deployed inside containers.
+* How benchmark results can be collected, processed, and visualized.
+* How VM and container performance can be compared experimentally.
 
 ---
 
-## 19. Final Deliverables
+# 17. Final Deliverables
 
-The experiment includes:
+This experiment contains:
 
 * VM configuration evidence
 * Docker configuration evidence
@@ -566,7 +649,13 @@ The experiment includes:
 * Final conclusion
 
 ---
-**Name:** *Bhavana*
+
+## Course Information
+**Name:** Bhavana
+
 **Course:** Cloud Computing
+
 **Experiment:** 2 — Performance Analysis of Virtual Machines and Containers
+
 **Academic Year:** 2026–27
+
