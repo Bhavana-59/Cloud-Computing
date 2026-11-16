@@ -1,13 +1,8 @@
 
 # Kubernetes Cluster Setup, Deployment, Scaling & Self-Healing Using Kind
 
-<p align="center">
-  <img src="images/kubernetes-architecture.png" alt="Kubernetes Architecture" width="850">
-</p>
 
-<p align="center">
-  <b>A hands-on Cloud Computing experiment using Docker, Kubernetes, Kind and NGINX.</b>
-</p>
+
 
 ---
 
